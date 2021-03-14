@@ -12,9 +12,9 @@ MechaQMC5883 qmc;
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 void setup() {
-  Wire.begin();  // inicializa bus I2C
-  Heltec.begin(true /*DisplayEnable Enable*/, true /*Heltec.Heltec.Heltec.LoRa Disable*/, true /*Serial Enable*/, true /*PABOOST Enable*/, BAND /*long BAND*/);
+  Heltec.begin(false /*DisplayEnable Enable*/, true /*Heltec.Heltec.Heltec.LoRa Disable*/, true /*Serial Enable*/, true /*PABOOST Enable*/, BAND /*long BAND*/);
   Serial.begin(9600);
+  Wire.begin(SDA, SCL);  // inicializa bus I2C
   qmc.init();  //inicializa objeto
 
 }
@@ -24,7 +24,8 @@ void loop() {
   qmc.read(&x,&y,&z,&acimut); // funcion para leer valores y asignar a variables
   
   Serial.print("Ping: ");
-  Serial.print(sonar.ping_cm());
+  int distance = sonar.ping_cm();
+  Serial.print(distance);
   Serial.println("cm");
   Serial.print("x:");   // muestra texto x:
   Serial.print(x);    // muestra valor de variable x
