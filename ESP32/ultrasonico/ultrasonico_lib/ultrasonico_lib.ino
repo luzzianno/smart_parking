@@ -8,6 +8,11 @@
 #define ECHO_PIN 13
 #define MAX_DISTANCE 200
 
+String rsii = "RSII --"
+String packSize = "--"
+String packet ;
+
+
 MechaQMC5883 qmc;
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
@@ -40,4 +45,12 @@ void loop() {
   Serial.println(acimut); // muestra valor de variable acimut
   delay(250);
 
+  //Envio de packete
+  LoRa.beginPacket();
+  LoRa.setTxPower(14,RF_PACONFIG_PASELECT_PABOOST);
+  LoRa.print(String(distance) + ";");
+  LoRa.print(String(x) + ";");
+  LoRa.print(String(y) + ";");
+  LoRa.print(String(z) + ";");
+  LoRa.endPacket();
 }
