@@ -8,8 +8,8 @@
 #define ECHO_PIN 13
 #define MAX_DISTANCE 200
 
-String rsii = "RSII --"
-String packSize = "--"
+String rsii = "RSII --";
+String packSize = "--";
 String packet ;
 
 
@@ -43,7 +43,6 @@ void loop() {
   Serial.print("\t");   // espacio de tabulacion
   Serial.print("a:");   // muestra texto a:
   Serial.println(acimut); // muestra valor de variable acimut
-  delay(250);
 
   //Envio de packete
   LoRa.beginPacket();
@@ -53,4 +52,5 @@ void loop() {
   LoRa.print(String(y) + ";");
   LoRa.print(String(z) + ";");
   LoRa.endPacket();
+  delay(250);
 }
