@@ -39,18 +39,16 @@ void loop() {
     distance = sonar.ping_cm();
     x2 = x2 + x;
     y2 = y2 + y;
-    z2 = z2 + z;
     distance2 = distance2 + distance;
   }
   
   //Normalizacion de valores
   x2 = x2/10;
   y2 = y2/10;
-  z2 = z2/10;
   distance2 = distance2/10;
 
   //Evaluacion de ocupancia del slot de estacionamiento
-  if ((distance < 50) && (10 < x < 50) && (10 < y < 50) && (10 < z < 50)){
+  if ((distance < 50) && ((450 > x) || (x > 650)) && ((450 > y) || (y < 650))){
     state = "occupied";
   }
   else{
@@ -60,8 +58,8 @@ void loop() {
   //Envio de packete
   LoRa.beginPacket();
   LoRa.setTxPower(14,RF_PACONFIG_PASELECT_PABOOST);
-  LoRa.print("Ocupacion: ");
-  LoRa.print(String(distance2));
+  LoRa.print("State: ");
+  LoRa.print(String(state));
   LoRa.endPacket();
   delay(500);
 }
