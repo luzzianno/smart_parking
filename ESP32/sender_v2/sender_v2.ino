@@ -48,17 +48,20 @@ void loop() {
   distance2 = distance2/10;
 
   //Evaluacion de ocupancia del slot de estacionamiento
-  if ((distance < 50) && ((450 > x) || (x > 650)) && ((450 > y) || (y < 650))){
+  if ((distance < 50) && ((450 > x) || (x > 900)) && ((450 > y) || (y > 650))){
     state = "occupied";
   }
   else{
     state = "unoccupied";
   }
-
+  Serial.println(distance2);
+  Serial.println(x2);
+  Serial.println(y2);
+  Serial.println(state);
   //Envio de packete
   LoRa.beginPacket();
   LoRa.setTxPower(14,RF_PACONFIG_PASELECT_PABOOST);
-  LoRa.print("State: ");
+  LoRa.print("Slot_1:");
   LoRa.print(String(state));
   LoRa.endPacket();
   delay(500);
