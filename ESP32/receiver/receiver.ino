@@ -30,7 +30,7 @@
 
 FirebaseData firebaseData;
 
-String parking = "Parking: "
+String parking = "Parking: ";
 
 String rssi = "RSSI --";
 String packSize = "--";
@@ -98,13 +98,19 @@ void loop() {
   String cadena_1 = "";
   String cadena_2 = packet;
   
-  while (packet[cont] != ";"){
-     cadena_1 += packet[0];
-     cadena_2 = cadena_2.substring(cont+1);
+  Serial.println(packet);
+  if (size_packet > 1) {
+    while(packet[cont] != ':'){
+     cadena_1 += packet[cont];
      cont += 1;
+     Serial.println(cont);
+    }
   }
+  cadena_2 = cadena_2.substring(cont+1);
   
-  Firebase.setString(firebaseData,parking + cadena_1, cadena_2);
-  Firebase.end(firebaseData);
-  delay(10);
-}
+  Serial.println(cadena_1 + ":");
+  Serial.println(cadena_2);
+  
+  Firebase.setString(firebaseData,cadena_1,cadena_2);
+  //Firebase.end(firebaseData);
+  delay(250);
