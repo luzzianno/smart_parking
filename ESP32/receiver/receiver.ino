@@ -1,28 +1,9 @@
-/*
-  This is a simple example show the Heltec.LoRa recived data in OLED.
-
-  The onboard OLED display is SSD1306 driver and I2C interface. In order to make the
-  OLED correctly operation, you should output a high-low-high(1-0-1) signal by soft-
-  ware to OLED's reset pin, the low-level signal at least 5ms.
-
-  OLED pins to ESP32 GPIOs via this connecthin:
-  OLED_SDA -- GPIO4
-  OLED_SCL -- GPIO15
-  OLED_RST -- GPIO16
-  
-  by Aaron.Lee from HelTec AutoMation, ChengDu, China
-  成都惠利特自动化科技有限公司
-  www.heltec.cn
-  
-  this project also realess in GitHub:
-  https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series
-*/
 #include "heltec.h" 
 #include "images.h"
 #include <WiFi.h>
 #include "FirebaseESP32.h"
 
-#define BAND    915E6  //you can set band here directly,e.g. 868E6,915E6
+#define BAND    915E6
 #define WIFI_NETWORK "Wifitelsur_VERA"
 #define WIFI_PASSWORD "108021586"
 #define FIREBASE_HOST "https://smart-parking-9e55f-default-rtdb.firebaseio.com/"
@@ -95,8 +76,8 @@ void loop() {
   if (packetSize) { cbk(packetSize);  }
   int size_packet = packet.length();
   int cont = 0;
-  String cadena_1 = "";
-  String cadena_2 = packet;
+  String slot = "";
+  String value = "";
   
   Serial.println(packet);
   if (size_packet > 1) {
@@ -106,11 +87,11 @@ void loop() {
      Serial.println(cont);
     }
   }
-  cadena_2 = cadena_2.substring(cont+1);
+  value = packet.substring(cont+1);
   
-  Serial.println(cadena_1 + ":");
-  Serial.println(cadena_2);
+  Serial.println(slot + ":");
+  Serial.println(value);
   
   Firebase.setString(firebaseData,cadena_1,cadena_2);
-  //Firebase.end(firebaseData);
+  Firebase.end(firebaseData);
   delay(250);
