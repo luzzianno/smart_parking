@@ -3,7 +3,7 @@
 #include <MechaQMC5883.h> // incluye libreria para magnetometro QMC5883L
 #include <WiFi.h>
 #include "heltec.h"
-
+//HOLA DILUCIAN
 #define BAND    915E6  //Banda red LoRa
 #define TRIGGER_PIN 12
 #define ECHO_PIN 13
